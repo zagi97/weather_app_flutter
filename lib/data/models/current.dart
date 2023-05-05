@@ -13,7 +13,7 @@ class Current {
   factory Current.fromJson(Map<String, dynamic> jsonWeather) => Current(
         tempInCelsius: jsonWeather["temp_c"],
         lastUpdated: jsonWeather["last_updated"],
-        condition: jsonWeather["condition"],
+        condition: Condition.fromJson(jsonWeather["condition"]),
 
         /* user: List<User>.from(json_weather["user"].map((x) => User.fromJson(x))), */
       );

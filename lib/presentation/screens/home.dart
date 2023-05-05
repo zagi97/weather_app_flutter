@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/data/models/weather_response.dart';
 import 'package:weather_app/data/repositories/weather_repository.dart';
+import 'package:weather_app/logic/waether_bloc/weather_bloc.dart';
+import 'package:weather_app/presentation/widgets/search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,52 +15,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
 
   @override
   Widget build(BuildContext homeScreencontext) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Weather Forecast'),
-        backgroundColor: const Color.fromARGB(255, 78, 129, 104),
-      ),
-      body: Container(
-        color: const Color.fromARGB(255, 234, 240, 237),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Text(
-                  'Upišite ime grada',
-                  style: TextStyle(fontSize: 25),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-
-                    // Add a search icon or button to the search bar
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () {
-                        
-                      },
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-               Text('hi')
-              ],
-            ),
-          ),
+        title: const Text(
+          'Weather Forecast',
+          textAlign: TextAlign.center,
         ),
+        backgroundColor: const Color.fromARGB(255, 5, 137, 211),
+      ),
+      body: BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
+          if (state.status == WeatherStatus.initial) {
+            return Search(searchController: searchController, state:state);
+          }
+          if (state.status == WeatherStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.status == WeatherStatus.failure) {
+            return const Center(child: Text('Failure'));
+          }
+          if (state.status == WeatherStatus.loaded) {
+            return Search(searchController: searchController, state:state);
+
+            
+          }
+          return Container();
+        },
       ),
     );
   }

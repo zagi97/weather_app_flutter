@@ -14,6 +14,7 @@ class WeatherRepository {
           "aqi": "no",
         },
       );
+
       final WeatherResponse weatherResponse =
           WeatherResponse.fromJson(response.data);
 

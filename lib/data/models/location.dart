@@ -13,8 +13,8 @@ class Location {
   final String name;
   final String region;
   final String country;
-  final int lat;
-  final int lng;
+  final double lat;
+  final double lng;
   final String timeZone;
   final String localTime;
 

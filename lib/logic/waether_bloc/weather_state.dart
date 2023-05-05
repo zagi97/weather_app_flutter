@@ -1,30 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'weather_bloc.dart';
 
-@immutable
-abstract class WeatherState extends Equatable {
-  const WeatherState([List props = const []]) : super();
-}
+enum WeatherStatus{ initial, loading,loaded, failure}
 
-class WeatherEmpty extends WeatherState {
-  @override
-  List<Object?> get props => [];
-}
+class WeatherState extends Equatable {
+final WeatherStatus status;
+WeatherResponse? weatherResponse;
 
-class WeatherLoading extends WeatherState {
-  @override
-  List<Object?> get props => [];
-}
+WeatherState({
+  required this.status,
+  this.weatherResponse,
+});
 
-class WeatherLoaded extends WeatherState {
-  const WeatherLoaded(this.weatherResponse);
-
-  final WeatherResponse weatherResponse;
+WeatherState.initial() : status = WeatherStatus.initial; 
 
   @override
-  List<Object?> get props => [weatherResponse];
+  List<Object?> get props => [status,weatherResponse];
 }
 
-class WeatherError extends WeatherState {
-  @override
-  List<Object?> get props => [];
-}
+
