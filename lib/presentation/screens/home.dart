@@ -30,19 +30,18 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state.status == WeatherStatus.initial) {
-            return Search(searchController: searchController, state:state);
+            return Search(searchController: searchController, state: state);
           }
           if (state.status == WeatherStatus.loading) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (state.status == WeatherStatus.loaded) {
+            return Search(searchController: searchController, state: state);
+          }
           if (state.status == WeatherStatus.failure) {
             return const Center(child: Text('Failure'));
           }
-          if (state.status == WeatherStatus.loaded) {
-            return Search(searchController: searchController, state:state);
 
-            
-          }
           return Container();
         },
       ),
