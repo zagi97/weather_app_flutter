@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/data/models/weather_response.dart';
-import 'package:weather_app/data/repositories/weather_repository.dart';
 import 'package:weather_app/logic/waether_bloc/weather_bloc.dart';
 import 'package:weather_app/presentation/widgets/search.dart';
 
@@ -36,9 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           if (state.status == WeatherStatus.loaded) {
-            return Search(searchController: searchController, state: state);
+            return Search(searchController:  searchController, state: state);
           }
           if (state.status == WeatherStatus.failure) {
+            /*  return Search(searchController: searchController, state: state); */
             return const Center(child: Text('Failure'));
           }
 

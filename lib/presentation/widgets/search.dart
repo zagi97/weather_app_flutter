@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/presentation/screens/week_weather.dart';
 
 import '../../logic/waether_bloc/weather_bloc.dart';
 
@@ -28,11 +29,10 @@ class Search extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            /*  const Text(someFunction()),  */
-            const Text(
+            /*   const Text(
               'Upišite ime željenog mjesta',
               style: TextStyle(fontSize: 25, color: Colors.white),
-            ),
+            ), */
             const SizedBox(
               height: 50,
             ),
@@ -74,15 +74,51 @@ class Search extends StatelessWidget {
                 ),
               ),
             ),
-            Text(state.weatherResponse?.location.name ?? ''),
-            Text(state.weatherResponse?.current.tempInCelsius.toString() ?? ''),
-            /*  Text(state.weatherResponse?.forecast.forecastDay.date ?? ''), */
+            const SizedBox(
+              height: 30,
+            ),
+            Text(
+              state.weatherResponse?.location.name ?? 'N/A',
+              style: const TextStyle(fontSize: 30),
+            ),
+          
+            Text(
+              '${state.weatherResponse?.current.tempInCelsius.toString()} °C',
+              style: const TextStyle(fontSize: 50),
+            ),
+              Text(
+              state.weatherResponse?.current.condition.conditionName ??
+                  'N/A',
+              style: const TextStyle(fontSize: 15),
+            ),
+             const SizedBox(
+              height: 60,
+            ),
+            /*  Text(state
+                    .weekWeatherResponse?.forecast.forecastday[0].day.maxtemp_c
+                    .toString() ??
+                '-'), */
+            Center(
+              child: ElevatedButton(
+                child: const Text('Week Weather'),
+                onPressed: () {
+                  context
+                      .read<WeatherBloc>()
+                      .add(GetWeekWeatherForLocation(searchController.text));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WeekWeather(
+                          cityName:
+                              state.weatherResponse?.location.name ?? 'N/A'),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
-
-      /*  Text(state.weatherResponse!.location.name),
-       Text(state.weatherResponse!.current.tempInCelsius.toString()),  */
     );
   }
 }

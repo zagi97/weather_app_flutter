@@ -1,11 +1,20 @@
 import 'package:weather_app/data/models/forecastday.dart';
 
 class Forecast {
-  const Forecast({required this.forecastDay});
+  const Forecast({required this.forecastday});
 
-  final ForecastDay forecastDay;
+  /*  final ForecastDay forecastday;
 
   factory Forecast.fromJson(Map<String, dynamic> jsonWeather) => Forecast(
-        forecastDay: ForecastDay.fromJson(jsonWeather["forecastday"]),
+        forecastday: ForecastDay.fromJson(jsonWeather["forecastday"]),
+      ); */
+
+  final List<ForecastDay> forecastday;
+
+  factory Forecast.fromJson(Map<String, dynamic> jsonWeather) => Forecast(
+        forecastday: [
+          for (final day in jsonWeather["forecastday"])
+            ForecastDay.fromJson(day),
+        ],
       );
 }

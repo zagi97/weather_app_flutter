@@ -15,14 +15,14 @@ class Hour {
   });
 
   final String time;
-  final int temp_c;
+  final double temp_c;
   final HourCondition hourCondition;
-  final int wind_kph;
+  final double wind_kph;
   final String wind_dir;
-  final int pressure_mb;
+  final double pressure_mb;
   final int humidity;
   final int cloud;
-  final int feelslike_c;
+  final double feelslike_c;
   final int chance_of_rain;
 
   factory Hour.fromJson(Map<String, dynamic> jsonWeather) => Hour(

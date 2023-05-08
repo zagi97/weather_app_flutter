@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:weather_app/data/models/weather_response.dart';
+import 'package:weather_app/data/models/week_weather_response.dart';
 
 class WeatherRepository {
   final Dio dio = Dio();
@@ -24,7 +25,8 @@ class WeatherRepository {
     }
   }
 
-  Future<WeatherResponse> getWeekWeatherForLocation(String placeName) async {
+  Future<WeekWeatherResponse> getWeekWeatherForLocation(
+      String placeName) async {
     try {
       final Response response = await dio.get(
         'http://api.weatherapi.com/v1/forecast.json?key=a2777888a2a54a929cb134311230305',
@@ -36,12 +38,10 @@ class WeatherRepository {
         },
       );
 
-      print(placeName);
+      final WeekWeatherResponse weekWeatherResponse =
+          WeekWeatherResponse.fromJson(response.data);
 
-      final WeatherResponse weatherResponse =
-          WeatherResponse.fromJson(response.data);
-
-      return weatherResponse;
+      return weekWeatherResponse;
     } catch (e) {
       rethrow; // rethrow the error to propagate it up the call stack
     }

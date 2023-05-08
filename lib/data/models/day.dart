@@ -9,10 +9,10 @@ class Day {
     required this.condition_day,
   });
 
-  final int maxtemp_c;
-  final int mintemp_c;
-  final int maxwind_kph;
-  final int totalprecip_mm;
+  final double maxtemp_c;
+  final double mintemp_c;
+  final double maxwind_kph;
+  final double totalprecip_mm;
   final DayCondition condition_day;
 
   factory Day.fromJson(Map<String, dynamic> jsonWeather) => Day(
@@ -20,6 +20,6 @@ class Day {
         mintemp_c: jsonWeather['mintemp_c'],
         maxwind_kph: jsonWeather['maxwind_kph'],
         totalprecip_mm: jsonWeather['totalprecip_mm'],
-        condition_day: DayCondition.fromJson(jsonWeather['maxtemp_c']),
+        condition_day: DayCondition.fromJson(jsonWeather['condition']),
       );
 }

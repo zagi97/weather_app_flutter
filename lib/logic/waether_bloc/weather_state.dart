@@ -7,12 +7,16 @@ class WeatherState extends Equatable {
   WeatherState({
     required this.status,
     this.weatherResponse,
+    this.weekWeatherResponse,
   });
   final WeatherStatus status;
   WeatherResponse? weatherResponse;
+  WeekWeatherResponse? weekWeatherResponse;
 
   WeatherState.initial() : status = WeatherStatus.initial;
 
   @override
   List<Object?> get props => [status, weatherResponse];
+
+  List<Object?> get weekProps => [status, weekWeatherResponse];
 }
