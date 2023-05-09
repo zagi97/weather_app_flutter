@@ -18,13 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext homeScreencontext) {
     return Scaffold(
-      appBar: AppBar(
+      /* appBar: AppBar(
         title: const Text(
           'Weather Forecast',
           textAlign: TextAlign.center,
         ),
         backgroundColor: const Color.fromARGB(255, 5, 137, 211),
-      ),
+      ), */
       body: BlocBuilder<WeatherBloc, WeatherState>(
         builder: (context, state) {
           if (state.status == WeatherStatus.initial) {

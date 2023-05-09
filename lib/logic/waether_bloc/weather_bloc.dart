@@ -39,7 +39,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         status: WeatherStatus.loading,
       ));
       final weekWeatherData =
-          await weatherRepository.getWeekWeatherForLocation('Zagreb');
+          await weatherRepository.getWeekWeatherForLocation(event.cityName);
       emit(WeatherState(
           status: WeatherStatus.loaded, weekWeatherResponse: weekWeatherData));
     } catch (_) {

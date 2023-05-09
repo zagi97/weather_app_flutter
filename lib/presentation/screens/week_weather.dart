@@ -24,41 +24,69 @@ class _WeekWeatherState extends State<WeekWeather> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(
-            'Week Weather in ${widget.cityName}',
-            textAlign: TextAlign.center,
+          iconTheme: const IconThemeData(
+            color: Colors.white, //change your color here
           ),
-          backgroundColor: const Color.fromARGB(255, 5, 137, 211),
+          title: Text(
+            'Next 7 Days in ${widget.cityName}',
+            textAlign: TextAlign.justify,
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          backgroundColor: const Color.fromARGB(255, 4, 7, 8),
         ),
         body: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
-            return ListView(
-              padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  color: Colors.amber[600],
-                  child: Center(child: Text(widget.cityName)),
+            if (state.status == WeatherStatus.loading) {
+              return const CircularProgressIndicator();
+            }
+            return Container(
+              height: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    /*   Color.fromARGB(69, 228, 129, 15),
+            Color.fromARGB(255, 254, 200, 136), */
+                    Color.fromRGBO(253, 199, 157, 0.5),
+                    Color.fromRGBO(254, 171, 81, 1)
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                Container(
-                  color: Colors.amber[500],
-                  child: const Center(
-                          child: ForecastCollection(),
+              ),
+              child: ListView(
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color.fromARGB(255, 204, 193, 184),
+                    ),
+                    height: 200,
+                    child: Center(child: Text(widget.cityName)),
                   ),
-                ),
-                Container(
-                  height: 50,
-                  color: Colors.amber[100],
-                  child: Center(
-                    child: Text(
-                      state.weekWeatherResponse?.forecast.forecastday[1].day
-                              .mintemp_c
-                              .toString() ??
-                          'N/A',
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color.fromARGB(255, 212, 174, 142),
+                    ),
+                    child: const Center(
+                      child: ForecastCollection(),
                     ),
                   ),
-                ),
-              ],
+                  Container(
+                    height: 50,
+                    color: Colors.amber[100],
+                    child: Center(
+                      child: Text(
+                        state.weekWeatherResponse?.forecast.forecastday[1].day
+                                .mintemp_c
+                                .toString() ??
+                            'N/A',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           },
         ));
