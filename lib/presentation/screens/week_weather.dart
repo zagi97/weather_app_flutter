@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/logic/waether_bloc/weather_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/presentation/widgets/forecast_collection.dart';
+import 'package:weather_app/presentation/widgets/forecast_tomorrow.dart';
 
 class WeekWeather extends StatefulWidget {
   const WeekWeather({
@@ -24,20 +24,51 @@ class _WeekWeatherState extends State<WeekWeather> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //change your color here
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(247, 175, 121, 0.753),
+                  Color.fromRGBO(254, 171, 81, 1)
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
           ),
-          title: Text(
-            'Next 7 Days in ${widget.cityName}',
+          title: RichText(
             textAlign: TextAlign.justify,
-            style: const TextStyle(fontSize: 20, color: Colors.white),
+            text: TextSpan(
+              text: 'Next 7 Days in ',
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+              children: [
+                TextSpan(
+                  text: widget.cityName,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
           ),
           backgroundColor: const Color.fromARGB(255, 4, 7, 8),
         ),
         body: BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state) {
             if (state.status == WeatherStatus.loading) {
-              return const CircularProgressIndicator();
+              return Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromRGBO(253, 199, 157, 0.5),
+                      Color.fromRGBO(254, 171, 81, 1)
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: const Center(
+                  child: CircularProgressIndicator(color: Colors.black87),
+                ),
+              );
             }
             return Container(
               height: double.infinity,
@@ -55,36 +86,12 @@ class _WeekWeatherState extends State<WeekWeather> {
               ),
               child: ListView(
                 padding: const EdgeInsets.all(8),
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromARGB(255, 204, 193, 184),
-                    ),
-                    height: 200,
-                    child: Center(child: Text(widget.cityName)),
+                children: const <Widget>[
+                  ForecastTomorrow(),
+                  Center(
+                    child: ForecastCollection(),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromARGB(255, 212, 174, 142),
-                    ),
-                    child: const Center(
-                      child: ForecastCollection(),
-                    ),
-                  ),
-                  Container(
-                    height: 50,
-                    color: Colors.amber[100],
-                    child: Center(
-                      child: Text(
-                        state.weekWeatherResponse?.forecast.forecastday[1].day
-                                .mintemp_c
-                                .toString() ??
-                            'N/A',
-                      ),
-                    ),
-                  ),
+                  /* ), */
                 ],
               ),
             );

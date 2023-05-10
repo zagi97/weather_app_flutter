@@ -31,10 +31,24 @@ class _HomeScreenState extends State<HomeScreen> {
             return Search(searchController: searchController, state: state);
           }
           if (state.status == WeatherStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
+            return Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromRGBO(253, 199, 157, 0.5),
+                    Color.fromRGBO(254, 171, 81, 1)
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: const Center(
+                child: CircularProgressIndicator(color: Colors.black87),
+              ),
+            );
           }
           if (state.status == WeatherStatus.loaded) {
-            return Search(searchController:  searchController, state: state);
+            return Search(searchController: searchController, state: state);
           }
           if (state.status == WeatherStatus.failure) {
             /*  return Search(searchController: searchController, state: state); */
