@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:weather_app/presentation/screens/week_weather.dart';
+import 'package:weather_app/presentation/widgets/forecast_day_icons.dart';
 
 import '../../logic/waether_bloc/weather_bloc.dart';
 
@@ -16,7 +16,7 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //OVO MOŽDA NIJE PRAVO RJEŠENJE NITI TOČNO
-      height: double.infinity, 
+      height: double.infinity,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -32,14 +32,9 @@ class Search extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: SingleChildScrollView(
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /*   const Text(
-                    'Upišite ime željenog mjesta',
-                    style: TextStyle(fontSize: 25, color: Colors.white),
-                  ), */
               const SizedBox(
                 height: 50,
               ),
@@ -60,16 +55,12 @@ class Search extends StatelessWidget {
                     hintText:
                         'Enter the name of the place for weather forecast',
                     hintStyle: const TextStyle(color: Colors.white),
-
-                    // Add a search icon or button to the search bar
                     prefixIcon: IconButton(
                       icon: const Icon(Icons.search),
                       onPressed: () {
                         context
                             .read<WeatherBloc>()
                             .add(GetWeather(searchController.text));
-
-                        //searchController.clear();
                       },
                     ),
                     prefixIconColor: MaterialStateColor.resolveWith((states) =>
@@ -111,15 +102,12 @@ class Search extends StatelessWidget {
                         style: const TextStyle(fontSize: 30),
                       ),
                       Text(
-                      /*   state.weatherResponse?.location.localTime ?? '', */
+                        state.weatherResponse?.location.localTime ?? '',
                         //OVO ISPOD JE DOBAR KOD
                         //+++++++++++++++++++++++
-                         DateFormat('EEE, MMM d').format(DateTime.parse(
-                              state.weatherResponse?.current.lastUpdated ?? ''))
-                        //+++++++++++++++++++++++
-                        /*  DateFormat('yyyy-MM-dd H:mm').format(DateTime.parse(
-                        '${state.weatherResponse?.location.localTime}')),
-                    style: const TextStyle(fontSize: 15), */
+                        /*  DateFormat('EEE, MMM d').format(DateTime.parse(
+                              state.weatherResponse?.current.lastUpdated ??
+                                  '')) */
                       ),
                       Text(
                         '${state.weatherResponse?.current.tempInCelsius.toString()} °C',
@@ -131,136 +119,10 @@ class Search extends StatelessWidget {
                             'N/A',
                         style: const TextStyle(fontSize: 15),
                       ),
-                      Image.network(
-                          'http:${state.weatherResponse?.current.condition.icon ?? ''}',
-                          width: 128,
-                          height: 128,
-                          fit: BoxFit.fill
-                          /*     errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return const Text('Image not available');
-                    }, */
-                          ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color.fromARGB(172, 252, 224, 201),
-                              ),
-                              height: 60,
-                              /*   */
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 15, 0)),
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.white),
-                                    child: const Icon(
-                                      Icons.beach_access,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 0)),
-                                  const Text('Rain'),
-                                  const Spacer(),
-                                  Text(
-                                    '${state.weatherResponse?.current.precipMm.toString()}cms',
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 30, 0)),
-                                ],
-                              )),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 3)),
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color.fromARGB(172, 252, 224, 201),
-                              ),
-                              height: 60,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 15, 0)),
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.white),
-                                    child: const Icon(
-                                      Icons.wind_power,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 0)),
-                                  const Text('Wind'),
-                                  const Spacer(),
-                                  Text(
-                                    '${state.weatherResponse?.current.windKph.toString()}km/h',
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 30, 0)),
-                                ],
-                              )),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 3)),
-                          Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: const Color.fromARGB(172, 252, 224, 201),
-                              ),
-                              height: 60,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 15, 0)),
-                                  Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        color: Colors.white),
-                                    child: const Icon(
-                                      Icons.water_drop,
-                                      color: Colors.blue,
-                                    ),
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(10, 0, 0, 0)),
-                                  const Text('Humidity'),
-                                  const Spacer(),
-                                  Text(
-                                    '${state.weatherResponse?.current.humidity.toString()}%',
-                                  ),
-                                  const Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(0, 0, 30, 0)),
-                                ],
-                              )),
-                        ],
-                      ),
+                      const ForecastDayIcons(),
                       const SizedBox(
                         height: 30,
                       ),
